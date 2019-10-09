@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1e4f978-b3bd-4ae1-84e9-9e1170bce808" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoggleSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/BoggleSolver.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +70,7 @@
     <configuration name="BoggleSolver" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="BoggleSolver" />
       <module name="Algorithms, Part II" />
-      <option name="PROGRAM_PARAMETERS" value="dictionary-yawl.txt board4x4.txt" />
+      <option name="PROGRAM_PARAMETERS" value="dictionary-nursery.txt board4x4.txt" />
       <option name="VM_PARAMETERS" value="-ea" />
       <method v="2">
         <option name="Make" enabled="true" />
