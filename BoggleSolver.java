@@ -41,6 +41,7 @@ public class BoggleSolver {
                 String curWord = prevWord + board.getLetter(curX, curY);
                 dfsBoard(board, marked, curWordArr, curWord, curX + i, curY + j);
                 if (debug) StdOut.println("Word formed : " + curWord);
+                if (words.contains(curWord) && curWord.length() > 2) StdOut.println("HOLLLA");
 
             }
         }
