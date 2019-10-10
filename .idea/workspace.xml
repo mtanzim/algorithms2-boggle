@@ -116,14 +116,14 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BoggleSolver.java</url>
-          <line>62</line>
-          <option name="timeStamp" value="6" />
+          <line>59</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
-        <watch expression="prevWord" />
+        <watch expression="curWord" language="JAVA" />
         <watch expression="board.getLetter(curX, curY)" language="JAVA" />
         <watch expression="Arrays.toString(marked[0])" language="JAVA" custom="java.util.Arrays" />
         <watch expression="Arrays.toString(marked[1])" language="JAVA" custom="java.util.Arrays" />
