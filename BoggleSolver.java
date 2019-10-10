@@ -24,42 +24,54 @@ public class BoggleSolver {
     }
 
     private void dfsBoard(BoggleBoard board, boolean[][] marked,
-                          String prevWord, int curX,
-                          int curY, HashSet<String> validWords) {
+                          String curWord, int curX,
+                          int curY, HashSet<String> validWords, HashSet<String> curDict) {
         boolean debug = false;
 
         marked[curX][curY] = true;
         char curLetter = board.getLetter(curX, curY);
         if (Character.compare(curLetter, 'Q') == 0) {
-            prevWord = prevWord + "QU";
+            curWord = curWord + "QU";
         }
         else {
-            prevWord = prevWord + curLetter;
+            curWord = curWord + curLetter;
         }
-        if (debug) StdOut.println("Word formed : " + prevWord);
-        if (words.contains(prevWord) && prevWord.length() > 2) validWords.add(prevWord);
+
+        if (curDict != null && curWord.length() > 2 && curDict.contains(curWord)) {
+            validWords.add(curWord);
+            if (debug) StdOut.println("Added " + curWord);
+
+        }
+
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 if (i == 0 && j == 0) continue;
-                // prefix optimization
-                Iterable<String> possibleWords = words.keysWithPrefix(prevWord);
-                if (!possibleWords.iterator().hasNext()) continue;
                 if (curX + i > board.rows() - 1) continue;
                 if (curY + j > board.cols() - 1) continue;
                 if (curX + i < 0) continue;
                 if (curY + j < 0) continue;
                 if (marked[curX + i][curY + j]) continue;
-                dfsBoard(board, marked, prevWord, curX + i, curY + j, validWords);
+
+                // prefix optimization
+                Iterable<String> possibleWords = words.keysWithPrefix(curWord);
+                if (!possibleWords.iterator().hasNext()) continue;
+                curDict = new HashSet<String>();
+                for (String possibleWord : possibleWords) {
+                    curDict.add(possibleWord);
+                }
+                if (debug) StdOut.println(curWord);
+                dfsBoard(board, marked, curWord, curX + i, curY + j, validWords, curDict);
             }
         }
         // NOTE: different type of dfs traversal
         // remove trace of the last completed node so all possibilities can be traversed
         marked[curX][curY] = false;
+        curWord = curWord.substring(0,curWord.length()-1);
     }
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
     public Iterable<String> getAllValidWords(BoggleBoard board) {
-        boolean debug = false;
+        boolean debug = true;
 
         HashSet<String> validWords = new HashSet<String>();
         if (debug) StdOut.println(board.toString());
@@ -67,12 +79,12 @@ public class BoggleSolver {
         for (int x = 0; x < board.cols(); x++) {
             for (int y = 0; y < board.rows(); y++) {
                 boolean[][] marked = new boolean[board.rows()][board.cols()];
-                // Stopwatch timer = new Stopwatch();
-                dfsBoard(board, marked, "", x, y, validWords);
-                // if (debug) {
-                //     StdOut.println(board.getLetter(x, y) + " took: " + timer.elapsedTime() + " s");
-                //
-                // }
+                Stopwatch timer = new Stopwatch();
+                dfsBoard(board, marked, "", x, y, validWords, null);
+                if (debug) {
+                    StdOut.println(board.getLetter(x, y) + " took: " + timer.elapsedTime() + " s");
+
+                }
             }
 
         }

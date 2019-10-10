@@ -116,7 +116,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BoggleSolver.java</url>
-          <line>51</line>
+          <line>62</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
@@ -130,6 +130,8 @@
         <watch expression="Arrays.toString(marked[2])" language="JAVA" custom="java.util.Arrays" />
         <watch expression="Arrays.toString(marked[3])" language="JAVA" custom="java.util.Arrays" />
         <watch expression="!possibleWords.iterator().hasNext()" language="JAVA" />
+        <watch expression="possibleWords" language="JAVA" />
+        <watch expression="validWords.toString()" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
