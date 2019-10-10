@@ -116,12 +116,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BoggleSolver.java</url>
-          <line>35</line>
+          <line>37</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BoggleSolver.java</url>
-          <line>44</line>
+          <line>48</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>

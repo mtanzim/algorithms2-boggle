@@ -30,6 +30,8 @@ public class BoggleSolver {
         if (curX < 0) return;
         if (curY < 0) return;
         if (marked[curX][curY]) return;
+        Iterable<String> possibleWords = words.keysWithPrefix(prevWord);
+        if (!possibleWords.iterator().hasNext()) return;
 
         marked[curX][curY] = true;
         prevWord = prevWord + board.getLetter(curX, curY);
@@ -39,6 +41,8 @@ public class BoggleSolver {
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 if (i == 0 && j == 0) continue;
+                //prefix optimization
+
                 dfsBoard(board, marked, prevWord, curX + i, curY + j, validWords);
             }
         }
