@@ -70,7 +70,7 @@
     <configuration name="BoggleSolver" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="BoggleSolver" />
       <module name="Algorithms, Part II" />
-      <option name="PROGRAM_PARAMETERS" value="dictionary-nursery.txt board4x4.txt" />
+      <option name="PROGRAM_PARAMETERS" value="dictionary-algs4.txt board4x4.txt" />
       <option name="VM_PARAMETERS" value="-ea" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -110,5 +110,31 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BoggleSolver.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BoggleSolver.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="prevWord" />
+        <watch expression="board.getLetter(curX, curY)" language="JAVA" />
+        <watch expression="Arrays.toString(marked[0])" language="JAVA" custom="java.util.Arrays" />
+        <watch expression="Arrays.toString(marked[1])" language="JAVA" custom="java.util.Arrays" />
+        <watch expression="Arrays.toString(marked[2])" language="JAVA" custom="java.util.Arrays" />
+        <watch expression="Arrays.toString(marked[3])" language="JAVA" custom="java.util.Arrays" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
