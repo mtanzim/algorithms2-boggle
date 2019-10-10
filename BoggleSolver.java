@@ -28,18 +28,7 @@ public class BoggleSolver {
                           int curY, HashSet<String> validWords) {
         boolean debug = false;
 
-        if (curX > board.rows() - 1) return;
-        if (curY > board.cols() - 1) return;
-        if (curX < 0) return;
-        if (curY < 0) return;
-        if (marked[curX][curY]) return;
-
-        // prefix optimization
-        Iterable<String> possibleWords = words.keysWithPrefix(prevWord);
-        if (!possibleWords.iterator().hasNext()) return;
-
         marked[curX][curY] = true;
-
         char curLetter = board.getLetter(curX, curY);
         if (Character.compare(curLetter, 'Q') == 0) {
             prevWord = prevWord + "QU";
@@ -52,6 +41,14 @@ public class BoggleSolver {
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 if (i == 0 && j == 0) continue;
+                // prefix optimization
+                Iterable<String> possibleWords = words.keysWithPrefix(prevWord);
+                if (!possibleWords.iterator().hasNext()) continue;
+                if (curX + i > board.rows() - 1) continue;
+                if (curY + j > board.cols() - 1) continue;
+                if (curX + i < 0) continue;
+                if (curY + j < 0) continue;
+                if (marked[curX + i][curY + j]) continue;
                 dfsBoard(board, marked, prevWord, curX + i, curY + j, validWords);
             }
         }
@@ -69,9 +66,13 @@ public class BoggleSolver {
 
         for (int x = 0; x < board.cols(); x++) {
             for (int y = 0; y < board.rows(); y++) {
-                if (debug) StdOut.println(board.getLetter(x, y));
                 boolean[][] marked = new boolean[board.rows()][board.cols()];
+                // Stopwatch timer = new Stopwatch();
                 dfsBoard(board, marked, "", x, y, validWords);
+                // if (debug) {
+                //     StdOut.println(board.getLetter(x, y) + " took: " + timer.elapsedTime() + " s");
+                //
+                // }
             }
 
         }
@@ -94,13 +95,14 @@ public class BoggleSolver {
     }
 
     public static void main(String[] args) {
+        boolean debug = true;
         In in = new In(args[0]);
         String[] dictionary = in.readAllStrings();
 
         Stopwatch timer = new Stopwatch();
-        StdOut.println("Starting!");
+        if (debug) StdOut.println("Starting!");
         BoggleSolver solver = new BoggleSolver(dictionary);
-        StdOut.println("Elapsed to form dictionary = " + timer.elapsedTime());
+        if (debug) StdOut.println("Elapsed to form dictionary = " + timer.elapsedTime());
 
         BoggleBoard board = new BoggleBoard(args[1]);
         int score = 0;
@@ -109,7 +111,7 @@ public class BoggleSolver {
             StdOut.println(word);
             score += solver.scoreOf(word);
         }
-        StdOut.println("Score = " + score);
-        StdOut.println("Elapsed to traverse words = " + timer.elapsedTime());
+        if (debug) StdOut.println("Score = " + score);
+        if (debug) StdOut.println("Elapsed to traverse words = " + timer.elapsedTime());
     }
 }
