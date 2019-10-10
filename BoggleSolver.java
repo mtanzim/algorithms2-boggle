@@ -6,7 +6,10 @@
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Stopwatch;
 import edu.princeton.cs.algs4.TrieSET;
+
+import java.util.HashSet;
 
 public class BoggleSolver {
 
@@ -15,14 +18,14 @@ public class BoggleSolver {
     // Initializes the data structure using the given array of strings as the dictionary.
     // (You can assume each word in the dictionary contains only the uppercase letters A through Z.)
     public BoggleSolver(String[] dictionary) {
-        boolean debug = true;
+        boolean debug = false;
         if (debug) StdOut.println("Hello, constructing dictionary");
         for (String word : dictionary) words.add(word);
     }
 
     private void dfsBoard(BoggleBoard board, boolean[][] marked,
                           String prevWord, int curX,
-                          int curY, TrieSET validWords) {
+                          int curY, HashSet<String> validWords) {
         boolean debug = false;
 
         if (curX > board.rows() - 1) return;
@@ -31,7 +34,7 @@ public class BoggleSolver {
         if (curY < 0) return;
         if (marked[curX][curY]) return;
 
-        //prefix optimization
+        // prefix optimization
         Iterable<String> possibleWords = words.keysWithPrefix(prevWord);
         if (!possibleWords.iterator().hasNext()) return;
 
@@ -61,13 +64,13 @@ public class BoggleSolver {
     public Iterable<String> getAllValidWords(BoggleBoard board) {
         boolean debug = false;
 
-        TrieSET validWords = new TrieSET();
+        HashSet<String> validWords = new HashSet<String>();
         if (debug) StdOut.println(board.toString());
 
         for (int x = 0; x < board.cols(); x++) {
             for (int y = 0; y < board.rows(); y++) {
                 if (debug) StdOut.println(board.getLetter(x, y));
-                boolean marked[][] = new boolean[board.rows()][board.cols()];
+                boolean[][] marked = new boolean[board.rows()][board.cols()];
                 dfsBoard(board, marked, "", x, y, validWords);
             }
 
@@ -93,13 +96,20 @@ public class BoggleSolver {
     public static void main(String[] args) {
         In in = new In(args[0]);
         String[] dictionary = in.readAllStrings();
+
+        Stopwatch timer = new Stopwatch();
+        StdOut.println("Starting!");
         BoggleSolver solver = new BoggleSolver(dictionary);
+        StdOut.println("Elapsed to form dictionary = " + timer.elapsedTime());
+
         BoggleBoard board = new BoggleBoard(args[1]);
         int score = 0;
+        timer = new Stopwatch();
         for (String word : solver.getAllValidWords(board)) {
             StdOut.println(word);
             score += solver.scoreOf(word);
         }
         StdOut.println("Score = " + score);
+        StdOut.println("Elapsed to traverse words = " + timer.elapsedTime());
     }
 }
