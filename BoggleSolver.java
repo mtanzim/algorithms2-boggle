@@ -25,7 +25,7 @@ public class BoggleSolver {
 
     private void dfsBoard(BoggleBoard board, boolean[][] marked,
                           String curWord, int curX,
-                          int curY, HashSet<String> validWords, HashSet<String> curDict) {
+                          int curY, HashSet<String> validWords) {
         boolean debug = false;
 
         marked[curX][curY] = true;
@@ -37,16 +37,12 @@ public class BoggleSolver {
             curWord = curWord + curLetter;
         }
 
-        if (curWord.length() > 2 && curDict.contains(curWord)) {
+        if (curWord.length() > 2 && words.contains(curWord)) {
             validWords.add(curWord);
             if (debug) StdOut.println("Added " + curWord);
         }
         Iterable<String> possibleWords = words.keysWithPrefix(curWord);
         if (possibleWords.iterator().hasNext()) {
-            HashSet<String> nextDict = new HashSet<String>();
-            for (String word : possibleWords) {
-                nextDict.add(word);
-            }
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
                     if (i == 0 && j == 0) continue;
@@ -57,7 +53,7 @@ public class BoggleSolver {
                     if (marked[curX + i][curY + j]) continue;
 
                     if (debug) StdOut.println(curWord);
-                    dfsBoard(board, marked, curWord, curX + i, curY + j, validWords, nextDict);
+                    dfsBoard(board, marked, curWord, curX + i, curY + j, validWords);
 
                 }
             }
@@ -69,7 +65,7 @@ public class BoggleSolver {
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
     public Iterable<String> getAllValidWords(BoggleBoard board) {
-        boolean debug = true;
+        boolean debug = false;
 
         HashSet<String> validWords = new HashSet<String>();
         if (debug) StdOut.println(board.toString());
@@ -77,13 +73,8 @@ public class BoggleSolver {
         for (int x = 0; x < board.cols(); x++) {
             for (int y = 0; y < board.rows(); y++) {
                 boolean[][] marked = new boolean[board.rows()][board.cols()];
-                Iterable<String> possibleWords = words.keysWithPrefix("" + board.getLetter(x, y));
-                HashSet<String> nextDict = new HashSet<String>();
-                for (String word : possibleWords) {
-                    nextDict.add(word);
-                }
                 Stopwatch timer = new Stopwatch();
-                dfsBoard(board, marked, "", x, y, validWords, nextDict);
+                dfsBoard(board, marked, "", x, y, validWords);
                 if (debug) {
                     StdOut.println(board.getLetter(x, y) + " took: " + timer.elapsedTime() + " s");
 
