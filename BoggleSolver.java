@@ -7,20 +7,20 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.Stopwatch;
-import edu.princeton.cs.algs4.TrieSET;
+import edu.princeton.cs.algs4.TST;
 
 import java.util.HashSet;
 
 public class BoggleSolver {
 
-    private TrieSET words = new TrieSET();
+    private TST<Integer> words = new TST<Integer>();
 
     // Initializes the data structure using the given array of strings as the dictionary.
     // (You can assume each word in the dictionary contains only the uppercase letters A through Z.)
     public BoggleSolver(String[] dictionary) {
         boolean debug = false;
         if (debug) StdOut.println("Hello, constructing dictionary");
-        for (String word : dictionary) words.add(word);
+        for (String word : dictionary) words.put(word,0);
     }
 
     private void dfsBoard(BoggleBoard board, boolean[][] marked,
