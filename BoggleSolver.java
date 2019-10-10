@@ -1,7 +1,7 @@
 /* *****************************************************************************
- *  Name:
- *  Date:
- *  Description:
+ *  Name: BoggleSolver
+ *  Date: Oct 10,2019
+ *  Description: BoggleSolver for Algorithms II, Princeton University
  **************************************************************************** */
 
 import edu.princeton.cs.algs4.In;
@@ -30,24 +30,31 @@ public class BoggleSolver {
         if (curX < 0) return;
         if (curY < 0) return;
         if (marked[curX][curY]) return;
+
+        //prefix optimization
         Iterable<String> possibleWords = words.keysWithPrefix(prevWord);
         if (!possibleWords.iterator().hasNext()) return;
 
         marked[curX][curY] = true;
-        prevWord = prevWord + board.getLetter(curX, curY);
+
+        char curLetter = board.getLetter(curX, curY);
+        if (Character.compare(curLetter, 'Q') == 0) {
+            prevWord = prevWord + "QU";
+        }
+        else {
+            prevWord = prevWord + curLetter;
+        }
         if (debug) StdOut.println("Word formed : " + prevWord);
-        // if (debug) StdOut.println("Len of word formed : " + curWord.length());
         if (words.contains(prevWord) && prevWord.length() > 2) validWords.add(prevWord);
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 if (i == 0 && j == 0) continue;
-                //prefix optimization
-
                 dfsBoard(board, marked, prevWord, curX + i, curY + j, validWords);
             }
         }
+        // NOTE: different type of dfs traversal
+        // remove trace of the last completed node so all possibilities can be traversed
         marked[curX][curY] = false;
-
     }
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
@@ -78,7 +85,7 @@ public class BoggleSolver {
         if (len == 5) return 2;
         if (len == 6) return 3;
         if (len == 7) return 5;
-        if (len > 8) return 11;
+        if (len >= 8) return 11;
         return 0;
 
     }
