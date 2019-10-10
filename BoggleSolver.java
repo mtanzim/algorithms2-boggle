@@ -58,9 +58,9 @@ public class BoggleSolver {
                 }
             }
         }
-        marked[curX][curY] = false;
         // NOTE: different type of dfs traversal
         // remove trace of the last completed node so all possibilities can be traversed
+        marked[curX][curY] = false;
     }
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
@@ -110,14 +110,25 @@ public class BoggleSolver {
         BoggleSolver solver = new BoggleSolver(dictionary);
         if (debug) StdOut.println("Elapsed to form dictionary = " + timer.elapsedTime());
 
-        BoggleBoard board = new BoggleBoard(args[1]);
-        int score = 0;
         timer = new Stopwatch();
-        for (String word : solver.getAllValidWords(board)) {
-            StdOut.println(word);
-            score += solver.scoreOf(word);
+        int size = 10;
+        for (int i = 0; i < 10; i++) {
+            int score = 0;
+            BoggleBoard board;
+            if (i == 0) {
+                board = new BoggleBoard(args[1]);
+            } else {
+                board = new BoggleBoard(size,size);
+            }
+            Stopwatch timerInner = new Stopwatch();
+            for (String word : solver.getAllValidWords(board)) {
+                StdOut.println(word);
+                score += solver.scoreOf(word);
+            }
+            if (debug) StdOut.println("Score = " + score);
+            if (debug) StdOut.println("Elapsed to traverse words = " + timerInner.elapsedTime());
         }
-        if (debug) StdOut.println("Score = " + score);
-        if (debug) StdOut.println("Elapsed to traverse words = " + timer.elapsedTime());
+
+        if (debug) StdOut.println("\nElapsed to traverse All = " + timer.elapsedTime());
     }
 }
