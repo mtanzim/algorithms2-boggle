@@ -20,7 +20,7 @@ public class BoggleSolver {
     public BoggleSolver(String[] dictionary) {
         boolean debug = false;
         if (debug) StdOut.println("Hello, constructing dictionary");
-        for (String word : dictionary) words.put(word,0);
+        for (String word : dictionary) words.put(word, 0);
     }
 
     private void dfsBoard(BoggleBoard board, boolean[][] marked,
@@ -28,8 +28,14 @@ public class BoggleSolver {
                           int curY, HashSet<String> validWords) {
         boolean debug = false;
 
-        marked[curX][curY] = true;
-        char curLetter = board.getLetter(curX, curY);
+        if (curX < 0 || curY < 0) return;
+        if (curY > board.rows() - 1) return;
+        if (curX > board.cols() - 1) return;
+        if (marked[curY][curX]) return;
+
+        marked[curY][curX] = true;
+        if (debug) StdOut.println(curX + " " + curY);
+        char curLetter = board.getLetter(curY, curX);
         if (Character.compare(curLetter, 'Q') == 0) {
             curWord = curWord + "QU";
         }
@@ -46,21 +52,13 @@ public class BoggleSolver {
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
                     if (i == 0 && j == 0) continue;
-                    if (curX + i > board.rows() - 1) continue;
-                    if (curY + j > board.cols() - 1) continue;
-                    if (curX + i < 0) continue;
-                    if (curY + j < 0) continue;
-                    if (marked[curX + i][curY + j]) continue;
-
-                    if (debug) StdOut.println(curWord);
                     dfsBoard(board, marked, curWord, curX + i, curY + j, validWords);
-
                 }
             }
         }
         // NOTE: different type of dfs traversal
         // remove trace of the last completed node so all possibilities can be traversed
-        marked[curX][curY] = false;
+        marked[curY][curX] = false;
     }
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
@@ -111,15 +109,18 @@ public class BoggleSolver {
         if (debug) StdOut.println("Elapsed to form dictionary = " + timer.elapsedTime());
 
         timer = new Stopwatch();
-        int size = 10;
-        for (int i = 0; i < 10; i++) {
+        // int size = 10;
+        for (int i = 0; i < 3; i++) {
             int score = 0;
             BoggleBoard board;
             if (i == 0) {
                 board = new BoggleBoard(args[1]);
-            } else {
-                board = new BoggleBoard(size,size);
             }
+            else {
+                board = new BoggleBoard(29, 1);
+            }
+            // board = new BoggleBoard(29, 1);
+            StdOut.println(board.toString());
             Stopwatch timerInner = new Stopwatch();
             for (String word : solver.getAllValidWords(board)) {
                 StdOut.println(word);

@@ -33,6 +33,7 @@
   <component name="FindBugs-IDEA-Workspace">
     <analyzeAfterCompile>true</analyzeAfterCompile>
     <toolWindowToFront>false</toolWindowToFront>
+    <toolWindowEditorPreview>false</toolWindowEditorPreview>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -116,8 +117,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BoggleSolver.java</url>
-          <line>55</line>
+          <line>54</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BoggleSolver.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -132,6 +138,11 @@
         <watch expression="!possibleWords.iterator().hasNext()" language="JAVA" />
         <watch expression="possibleWords" language="JAVA" />
         <watch expression="validWords.toString()" language="JAVA" />
+        <watch expression="curX + i" language="JAVA" />
+        <watch expression="curY + j" language="JAVA" />
+        <watch expression="board.rows()" language="JAVA" />
+        <watch expression="marked[curX + i][curY + j]" language="JAVA" />
+        <watch expression="marked[0].length" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
