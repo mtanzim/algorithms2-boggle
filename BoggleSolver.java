@@ -34,21 +34,23 @@ public class BoggleSolver {
         if (marked[curY][curX]) return;
 
         marked[curY][curX] = true;
+        if (curWord.length() > 2 && words.contains(curWord)) {
+            validWords.add(curWord);
+            if (debug) StdOut.println("Added " + curWord);
+        }
         if (debug) StdOut.println(curX + " " + curY);
         char curLetter = board.getLetter(curY, curX);
+
         if (Character.compare(curLetter, 'Q') == 0) {
             curWord = curWord + "QU";
         }
         else {
             curWord = curWord + curLetter;
         }
-
-        if (curWord.length() > 2 && words.contains(curWord)) {
-            validWords.add(curWord);
-            if (debug) StdOut.println("Added " + curWord);
-        }
+        boolean needDfs = false;
         Iterable<String> possibleWords = words.keysWithPrefix(curWord);
-        if (possibleWords.iterator().hasNext()) {
+        if (possibleWords.iterator().hasNext()) needDfs = true;
+        if (needDfs) {
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
                     if (i == 0 && j == 0) continue;
