@@ -108,17 +108,19 @@ public class BoggleSolver {
         BoggleSolver solver = new BoggleSolver(dictionary);
         if (debug) StdOut.println("Elapsed to form dictionary = " + timer.elapsedTime());
 
-        timer = new Stopwatch();
-        // int size = 10;
-        for (int i = 0; i < 3; i++) {
+        // timer = new Stopwatch();
+        double totalElapsed = 0.0;
+        int LIMITER = 150;
+        int size = 4;
+        for (int i = 0; i < LIMITER; i++) {
             int score = 0;
             BoggleBoard board;
-            if (i == 0) {
-                board = new BoggleBoard(args[1]);
-            }
-            else {
-                board = new BoggleBoard(29, 1);
-            }
+            // if (i == 0) {
+            //     board = new BoggleBoard(args[1]);
+            // }
+            // else {
+            board = new BoggleBoard(size, size);
+            // }
             // board = new BoggleBoard(29, 1);
             StdOut.println(board.toString());
             Stopwatch timerInner = new Stopwatch();
@@ -127,9 +129,12 @@ public class BoggleSolver {
                 score += solver.scoreOf(word);
             }
             if (debug) StdOut.println("Score = " + score);
-            if (debug) StdOut.println("Elapsed to traverse words = " + timerInner.elapsedTime());
+            double elapsed = timerInner.elapsedTime();
+            totalElapsed += elapsed;
+            if (debug) StdOut.println("Elapsed to traverse words = " + elapsed);
         }
 
-        if (debug) StdOut.println("\nElapsed to traverse All = " + timer.elapsedTime());
+        if (debug) StdOut.println("\nElapsed to traverse All = " + totalElapsed);
+        if (debug) StdOut.println("\nSolutions per second = " + LIMITER / totalElapsed);
     }
 }
